@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">URFU Museum</string>
+    <string name="exit">Exit</string>
+    <string name="no_permissions">Не было получено одно или несколько обязательных разрешений. Вы можете выставить разрешения вручную в настройках.</string>
+    <string name="warning">Warning</string>
+    <string name="settings">Settings</string>
+</resources>
