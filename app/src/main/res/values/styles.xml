@@ -61,13 +61,14 @@
     <style name="EntryCard" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="cardCornerRadius">2dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="cardCornerRadius">4dp</item>
         <item name="cardElevation">2dp</item>
-        <!--item name="contentPaddingBottom">24dp</item>
-        <item name="contentPaddingTop">24dp</item>
-        <item name="contentPaddingLeft">16dp</item>
-        <item name="contentPaddingRight">16dp</item-->
         <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="contentPaddingBottom">6dp</item>
     </style>
 
     <style name="EntryCardImage">
@@ -91,13 +92,22 @@
     <style name="EntryCardAuthor" parent="EntryCardTitle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/gray</item>
-        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
     <style name="EntryCardText" parent="EntryCardTitle">
         <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginTop">16dp</item>
         <item name="android:maxLines">2</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
+    <style name="EntryCardButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:text">@string/read_more</item>
     </style>
 
 </resources>
