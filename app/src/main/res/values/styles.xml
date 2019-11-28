@@ -1,26 +1,103 @@
 <resources>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
-    <style name="SplashTheme" parent="AppTheme.Base">
-        <item name="android:windowBackground">@color/colorPrimary</item>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Base">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!-- Splash screen -->
+
+    <style name="SplashLogo">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:src">@drawable/urfu_logo</item>
+    </style>
+
+    <style name="SplashText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Language Activity -->
+
+    <style name="LanguageChooseText">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/choose_lang</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:layout_marginTop">48dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="LanguageButton">
+        <item name="android:layout_width">@dimen/langButtonSize</item>
+        <item name="android:layout_height">@dimen/langButtonSize</item>
+        <item name="android:layout_marginRight">@dimen/langButtonMargin</item>
+        <item name="android:layout_marginBottom">@dimen/langButtonMargin</item>
+        <item name="android:background">@drawable/button_lang</item>
+    </style>
+
+    <!-- Entry card -->
+
+    <style name="EntryCard" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <!--item name="contentPaddingBottom">24dp</item>
+        <item name="contentPaddingTop">24dp</item>
+        <item name="contentPaddingLeft">16dp</item>
+        <item name="contentPaddingRight">16dp</item-->
+        <item name="cardBackgroundColor">@android:color/white</item>
+    </style>
+
+    <style name="EntryCardImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/entry_image</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="EntryCardTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="EntryCardAuthor" parent="EntryCardTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="EntryCardText" parent="EntryCardTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">22dp</item>
+        <item name="android:maxLines">2</item>
     </style>
 
 </resources>

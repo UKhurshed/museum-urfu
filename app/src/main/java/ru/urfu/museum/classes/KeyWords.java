@@ -10,4 +10,12 @@ public class KeyWords {
      * Fragments identity tags
      */
     public static final String FRAGMENT_SPLASH = "FRAGMENT_SPLASH";
+
+    /**
+     * Others
+     */
+    public static final String ID = "ID";
+    public static final String FLOOR = "FLOOR";
+    public static final String LANG_EN = "EN";
+    public static final String LANG_CH = "CH";
 }

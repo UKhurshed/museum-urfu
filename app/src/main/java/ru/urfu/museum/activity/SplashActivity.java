@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.SplashFragment;
-import ru.urfu.museum.utils.Preference;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,9 +19,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!Preference.isInited()) {
-            Preference.init(this);
-        }
         setContentView(R.layout.activity_splash);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

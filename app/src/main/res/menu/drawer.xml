@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navMuseum"
+            android:icon="@drawable/ic_ballot_outline"
+            android:title="@string/museum" />
+        <item
+            android:id="@+id/navWorkingTime"
+            android:icon="@drawable/ic_clock_outline"
+            android:title="@string/working_time" />
+        <item
+            android:id="@+id/navMyFavorites"
+            android:icon="@drawable/ic_heart_outline"
+            android:title="@string/my_favorites" />
+        <item
+            android:id="@+id/navAboutMuseum"
+            android:icon="@drawable/ic_information_outline"
+            android:title="@string/about_museum" />
+    </group>
+    <item
+        android:id="@+id/navChangeLanguage"
+        android:icon="@drawable/ic_translate"
+        android:title="@string/change_language" />
+    <item
+        android:id="@+id/navContacts"
+        android:icon="@drawable/ic_email_outline"
+        android:title="@string/contact_us" />
+    <item
+        android:id="@+id/navAboutApp"
+        android:icon="@drawable/ic_people"
+        android:title="@string/about_app" />
+
+</menu>

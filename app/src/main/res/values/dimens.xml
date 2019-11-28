@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="layoutPadding">16dp</dimen>
+    <dimen name="langButtonSize">98dp</dimen>
+    <dimen name="langButtonMargin">16dp</dimen>
+
+</resources>

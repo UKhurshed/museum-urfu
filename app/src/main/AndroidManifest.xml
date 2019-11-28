@@ -25,7 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LangActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

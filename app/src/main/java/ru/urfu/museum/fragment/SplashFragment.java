@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +24,7 @@ import ru.urfu.museum.activity.MainActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.utils.DelayedTask;
 import ru.urfu.museum.utils.Preference;
+import ru.urfu.museum.utils.TypefaceManager;
 
 public class SplashFragment extends Fragment {
     private View rootView;
@@ -45,6 +47,8 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_splash, container, false);
+            TextView splashText = rootView.findViewById(R.id.splashText);
+            splashText.setTypeface(TypefaceManager.getTypeface(getActivity(), TypefaceManager.LIGHT));
         }
         return rootView;
     }
@@ -54,10 +58,16 @@ public class SplashFragment extends Fragment {
     }
 
     private boolean isPermissionGranted(String permissionName) {
+        if (getActivity() == null) {
+            return false;
+        }
         return ContextCompat.checkSelfPermission(getActivity(), permissionName) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestMultiplePermissions() {
+        if (getActivity() == null) {
+            return;
+        }
         REQUEST_PERMISSIONS_AGAIN = false;
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, KeyWords.PERMISSION_REQUEST_CODE);
     }
@@ -81,7 +91,9 @@ public class SplashFragment extends Fragment {
                 builder.setNegativeButton(getStringFromRes(R.string.exit), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finish();
+                        if (getActivity() != null) {
+                            getActivity().finish();
+                        }
                     }
 
                 });
@@ -89,27 +101,35 @@ public class SplashFragment extends Fragment {
 
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        getActivity().finish();
+                        if (getActivity() != null) {
+                            getActivity().finish();
+                        }
                     }
 
                 });
                 builder.show();
             }
-        } else {
+        } else if (getActivity() != null) {
             getActivity().finish();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void openApplicationSettings() {
+    private void openApplicationSettings() {
+        if (getActivity() == null) {
+            return;
+        }
         REQUEST_PERMISSIONS_AGAIN = true;
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getActivity().getPackageName()));
         getActivity().startActivityForResult(appSettingsIntent, KeyWords.PERMISSION_REQUEST_CODE);
     }
 
     private void startNextActivity() {
+        if (getActivity() == null) {
+            return;
+        }
         Intent intent;
-        if (Preference.getValue(Preference.LANG, null) == null) {
+        if (Preference.getValue(getActivity(), Preference.LANG, null) == null) {
             intent = new Intent(getActivity(), LangActivity.class);
         } else {
             intent = new Intent(getActivity(), MainActivity.class);
@@ -119,13 +139,15 @@ public class SplashFragment extends Fragment {
     }
 
     private String getStringFromRes(int resId) {
-        return getActivity().getResources().getString(resId);
+        return getActivity() == null ? "" : getActivity().getResources().getString(resId);
     }
 
     public void onBackPressed() {
         if (delayedAskPermissions != null) {
             delayedAskPermissions.stop();
-            getActivity().finish();
+            if (getActivity() != null) {
+                getActivity().finish();
+            }
         }
     }
 
