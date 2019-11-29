@@ -16,8 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Arrays;
-
 import ru.urfu.museum.R;
 import ru.urfu.museum.fragment.MainFragment;
 
@@ -85,13 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private boolean shouldSwitchFragment(int id) {
-        int[] ids = {
-                R.id.navMuseum,
-                R.id.navWorkingTime,
-                R.id.navMyFavorites,
-                R.id.navAboutMuseum
-        };
-        return Arrays.asList(ids).contains(id);
+        switch (id) {
+            case R.id.navMuseum:
+            case R.id.navWorkingTime:
+            case R.id.navMyFavorites:
+            case R.id.navAboutMuseum:
+                return true;
+        }
+        return false;
     }
 
     private void displayFragment(Fragment fragment, Bundle bundle) {
