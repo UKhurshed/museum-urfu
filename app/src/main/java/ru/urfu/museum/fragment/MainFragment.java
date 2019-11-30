@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.adapters.MainAdapter;
+import ru.urfu.museum.classes.DimensionsUtil;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.classes.MocksProvider;
+import ru.urfu.museum.classes.SpacingItemDecoration;
 
 public class MainFragment extends Fragment {
 
@@ -36,12 +38,15 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null) {
+        if (rootView == null && getActivity() != null) {
             rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            int spanCount = 1;
+            float spacings = DimensionsUtil.pxFromDpResource(getActivity(), R.dimen.mainFragmentItemsSpacing);
             RecyclerView listView = rootView.findViewById(R.id.listView);
-            RecyclerView.LayoutManager manager = new GridLayoutManager(getActivity(), 1);
+            RecyclerView.LayoutManager manager = new GridLayoutManager(getActivity(), spanCount);
             listView.setAdapter(adapter);
             listView.setLayoutManager(manager);
+            listView.addItemDecoration(new SpacingItemDecoration(spanCount, spacings, true));
         }
         return rootView;
     }

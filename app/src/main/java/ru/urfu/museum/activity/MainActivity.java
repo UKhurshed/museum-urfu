@@ -1,5 +1,6 @@
 package ru.urfu.museum.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.fragment.MainFragment;
+import ru.urfu.museum.utils.Preference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navAboutMuseum:
                 break;
             case R.id.navChangeLanguage:
+                Preference.setValue(this, Preference.LANG, null);
+                Intent langIntent = new Intent(this, LangActivity.class);
+                langIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(langIntent);
                 break;
             case R.id.navContacts:
                 break;

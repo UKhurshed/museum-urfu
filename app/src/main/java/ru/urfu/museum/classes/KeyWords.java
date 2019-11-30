@@ -15,6 +15,7 @@ public class KeyWords {
      * Others
      */
     public static final String ID = "ID";
+    public static final String POSITION = "POSITION";
     public static final String FLOOR = "FLOOR";
     public static final String LANG_EN = "EN";
     public static final String LANG_CH = "CH";

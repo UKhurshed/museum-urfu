@@ -21,6 +21,11 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="GalleryTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="buttonWidgetStyle" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -34,6 +39,16 @@
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="GroupTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:background">@drawable/horizontal_rule</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/gray</item>
     </style>
 
     <!-- Splash screen -->
@@ -70,6 +85,7 @@
         <item name="android:layout_marginRight">@dimen/langButtonMargin</item>
         <item name="android:layout_marginBottom">@dimen/langButtonMargin</item>
         <item name="android:background">@drawable/button_lang</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <!-- Entry card -->
@@ -77,9 +93,6 @@
     <style name="EntryCard" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
         <item name="cardCornerRadius">4dp</item>
         <item name="cardElevation">2dp</item>
         <item name="cardBackgroundColor">@android:color/white</item>
@@ -115,7 +128,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginTop">18dp</item>
         <item name="android:maxLines">2</item>
-        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
     </style>
 
     <style name="EntryCardButton">
@@ -128,6 +141,18 @@
 
     <style name="DetailText" parent="EntryCardText">
         <item name="android:maxLines">1000</item>
+    </style>
+
+    <style name="DetailGalleryTitle" parent="GroupTitle">
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:text">@string/gallery</item>
+    </style>
+
+    <style name="DetailGallery">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
 </resources>

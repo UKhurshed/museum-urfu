@@ -30,7 +30,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.DetailActivity"
+            android:label=""
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:theme="@style/GalleryTheme" />
     </application>
 
 </manifest>
