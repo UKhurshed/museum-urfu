@@ -24,8 +24,10 @@ import com.google.android.material.navigation.NavigationView;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
+import ru.urfu.museum.fragment.AboutMuseumFragment;
+import ru.urfu.museum.fragment.FavoritesFragment;
 import ru.urfu.museum.fragment.MainFragment;
-import ru.urfu.museum.interfaces.ITitledFragment;
+import ru.urfu.museum.fragment.WorkingTimeFragment;
 import ru.urfu.museum.utils.Preference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.drawer = findViewById(R.id.drawerLayout);
         this.toolbarSpinner = findViewById(R.id.toolbarTitleSpinner);
-        this.toolbarTextView = findViewById(R.id.toolbarTitleTextView);this.setupToolbarSpinner();
+        this.toolbarTextView = findViewById(R.id.toolbarTitleTextView);
+        this.setupToolbarSpinner();
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(drawerToggle);
@@ -72,10 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentClass = MainFragment.class;
                 break;
             case R.id.navWorkingTime:
+                fragmentClass = WorkingTimeFragment.class;
                 break;
             case R.id.navMyFavorites:
+                fragmentClass = FavoritesFragment.class;
                 break;
             case R.id.navAboutMuseum:
+                fragmentClass = AboutMuseumFragment.class;
                 break;
             case R.id.navChangeLanguage:
                 Preference.setValue(this, Preference.LANG, null);
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         if (this.shouldSwitchFragment(id)) {
-            new AsyncDisplayFragment(fragmentClass, bundle);
+            (new AsyncDisplayFragment(fragmentClass, bundle)).execute();
             this.drawer.closeDrawer(GravityCompat.START);
         }
         return true;
@@ -151,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             fragmentTransaction.replace(R.id.frameLayout, fragment);
             fragmentTransaction.commitAllowingStateLoss();
-            setTitle(((ITitledFragment) this.fragment).getTitle());
             this.syncToolbarTitleView();
         } catch (IllegalStateException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package ru.urfu.museum.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,8 @@ import ru.urfu.museum.classes.DimensionsUtil;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.classes.MocksProvider;
 import ru.urfu.museum.classes.SpacingItemDecoration;
-import ru.urfu.museum.interfaces.ITitledFragment;
 
-public class MainFragment extends Fragment implements ITitledFragment {
+public class MainFragment extends Fragment {
 
     private int floor = -1;
     private View rootView;
@@ -32,11 +32,6 @@ public class MainFragment extends Fragment implements ITitledFragment {
         adapter = new MainAdapter(getActivity(), MocksProvider.getEntries(getActivity(), floor));
         adapter.setHasStableIds(true);
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -55,15 +50,17 @@ public class MainFragment extends Fragment implements ITitledFragment {
     }
 
     @Override
-    public String getTitle() {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return "";
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            Activity activity = getActivity();
+            String[] titles = context.getResources().getStringArray(R.array.toolbar_spinner_items);
+            if (this.floor < 0 || this.floor >= titles.length) {
+                activity.setTitle("");
+            }
+            activity.setTitle(titles[this.floor]);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        String[] titles = activity.getResources().getStringArray(R.array.toolbar_spinner_items);
-        if (this.floor < 0 || this.floor >= titles.length) {
-            return "";
-        }
-        return titles[this.floor];
     }
 }

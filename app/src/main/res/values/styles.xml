@@ -108,7 +108,7 @@
         <item name="android:layout_marginBottom">@dimen/langButtonMargin</item>
         <item name="android:background">@drawable/button_lang</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <!-- Entry card -->
