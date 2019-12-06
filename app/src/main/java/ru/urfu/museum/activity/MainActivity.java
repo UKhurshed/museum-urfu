@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -18,12 +23,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.MainFragment;
+import ru.urfu.museum.interfaces.ITitledFragment;
 import ru.urfu.museum.utils.Preference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private Spinner toolbarSpinner;
+    private TextView toolbarTextView;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         this.drawer = findViewById(R.id.drawerLayout);
+        this.toolbarSpinner = findViewById(R.id.toolbarTitleSpinner);
+        this.toolbarTextView = findViewById(R.id.toolbarTitleTextView);this.setupToolbarSpinner();
+
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -41,8 +54,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            displayFragment(new MainFragment(), null);
+            this.fragment = new MainFragment();
+            displayFragment(this.fragment, null);
         }
+        this.setupToolbarSpinner();
+        this.syncToolbarTitleView();
     }
 
     @Override
@@ -88,6 +104,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        this.toolbarTextView.setText(title);
+    }
+
+    private void setupToolbarSpinner() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.toolbar_spinner_items, R.layout.spinner_toolbar_title_layout);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.toolbarSpinner.setAdapter(adapter);
+        this.toolbarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(KeyWords.FLOOR, position + 1);
+                fragment = new MainFragment();
+                displayFragment(fragment, bundle);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+    }
+
     private boolean shouldSwitchFragment(int id) {
         switch (id) {
             case R.id.navMuseum:
@@ -106,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             fragmentTransaction.replace(R.id.frameLayout, fragment);
             fragmentTransaction.commitAllowingStateLoss();
+            setTitle(((ITitledFragment) this.fragment).getTitle());
+            this.syncToolbarTitleView();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
@@ -129,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Void result) {
             try {
-                Fragment fragment = (Fragment) fragmentClass.getConstructor().newInstance();
+                fragment = (Fragment) fragmentClass.getConstructor().newInstance();
                 displayFragment(fragment, this.bundle);
                 super.onPostExecute(result);
             } catch (Exception e) {
@@ -137,5 +184,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
+    }
+
+    private void syncToolbarTitleView() {
+        if (this.fragment == null) {
+            return;
+        }
+        if (this.fragment instanceof MainFragment) {
+            if (this.toolbarSpinner.getVisibility() == View.GONE) {
+                this.toolbarSpinner.setVisibility(View.VISIBLE);
+            }
+            if (this.toolbarTextView.getVisibility() == View.VISIBLE) {
+                this.toolbarTextView.setVisibility(View.GONE);
+            }
+        } else {
+            if (this.toolbarSpinner.getVisibility() == View.VISIBLE) {
+                this.toolbarSpinner.setVisibility(View.GONE);
+            }
+            if (this.toolbarTextView.getVisibility() == View.GONE) {
+                this.toolbarTextView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

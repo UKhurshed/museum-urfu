@@ -8,7 +8,7 @@ public abstract class DelayedTask {
     private Handler h;
     private Runnable r;
     private int delay = 0;
-    private boolean complete = false;
+    private boolean complete = true;
 
     public DelayedTask(final Context context, int timeoutResId) {
         if (context != null) {
@@ -16,8 +16,6 @@ public abstract class DelayedTask {
             r = new Runnable() {
                 public void run() {
                     if (context != null) {
-                        h = null;
-                        r = null;
                         execute();
                         complete = true;
                     }
@@ -31,8 +29,6 @@ public abstract class DelayedTask {
         h = new Handler();
         r = new Runnable() {
             public void run() {
-                h = null;
-                r = null;
                 execute();
                 complete = true;
             }
@@ -43,6 +39,7 @@ public abstract class DelayedTask {
     public void start() {
         synchronized (h) {
             if (h != null && r != null) {
+                complete = false;
                 h.postDelayed(r, delay);
             }
         }
@@ -61,8 +58,7 @@ public abstract class DelayedTask {
         synchronized (h) {
             if (h != null && r != null) {
                 h.removeCallbacks(r);
-                h = null;
-                r = null;
+                complete = true;
             }
         }
     }

@@ -5,39 +5,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <com.santalu.aspectratioimageview.AspectRatioImageView
-            android:id="@+id/detailImage"
-            style="@style/EntryCardImage"
-            android:contentDescription="@string/image_description"
-            app:ari_ratio="0.5625" />
-
-        <TextView
-            android:id="@+id/detailTitle"
-            style="@style/EntryCardTitle" />
-
-        <TextView
-            android:id="@+id/detailAuthor"
-            style="@style/EntryCardAuthor" />
-
-        <TextView
-            android:id="@+id/detailText"
-            style="@style/DetailText" />
-
-        <TextView
-            android:id="@+id/detailGalleryTitle"
-            style="@style/DetailGalleryTitle" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detailGallery"
-            style="@style/DetailGallery" />
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="24dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.santalu.aspectratioimageview.AspectRatioImageView
+                android:id="@+id/detailImage"
+                style="@style/EntryCardImage"
+                android:contentDescription="@string/image_description"
+                app:ari_ratio="0.6" />
+
+            <TextView
+                android:id="@+id/detailTitle"
+                style="@style/EntryCardTitle" />
+
+            <TextView
+                android:id="@+id/detailAuthor"
+                style="@style/EntryCardAuthor" />
+
+            <TextView
+                android:id="@+id/detailText"
+                style="@style/DetailText" />
+
+            <TextView
+                android:id="@+id/detailGalleryTitle"
+                style="@style/DetailGalleryTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detailGallery"
+                style="@style/DetailGallery" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+
+            <LinearLayout
+                android:id="@+id/detailPagination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/detailPrev"
+                    style="@style/DetailPrev">
+
+                    <TextView
+                        android:id="@+id/detailPrevTitle"
+                        style="@style/DetailPrevTitle"
+                        android:text="@string/previous" />
+
+                    <TextView
+                        android:id="@+id/detailPrevSubtitle"
+                        style="@style/DetailPrevSubtitle"
+                        android:layout_below="@id/detailPrevTitle" />
+
+                    <ImageView
+                        style="@style/DetailNextIcon"
+                        android:contentDescription="@string/image_description"
+                        app:srcCompat="@drawable/ic_arrow_left" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/detailNext"
+                    style="@style/DetailNext">
+
+                    <TextView
+                        android:id="@+id/detailNextTitle"
+                        style="@style/DetailNextTitle"
+                        android:text="@string/next" />
+
+                    <TextView
+                        android:id="@+id/detailNextSubtitle"
+                        style="@style/DetailNextSubtitle"
+                        android:layout_below="@id/detailNextTitle" />
+
+                    <ImageView
+                        style="@style/DetailNextIcon"
+                        android:contentDescription="@string/image_description"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_arrow_right" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/detailFavorite"
+            style="@style/DetailFavorite"
+            app:srcCompat="@drawable/ic_heart_outline" />
+    </RelativeLayout>
 </ScrollView>

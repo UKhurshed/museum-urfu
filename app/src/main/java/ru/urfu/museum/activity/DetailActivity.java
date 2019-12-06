@@ -12,18 +12,20 @@ import androidx.fragment.app.FragmentTransaction;
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.DetailFragment;
+import ru.urfu.museum.interfaces.DetailPageEntryListener;
 import ru.urfu.museum.interfaces.DetailPageScrollListener;
 import ru.urfu.museum.view.FadingScrimInsetsFrameLayout;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private DetailFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,30 +42,51 @@ public class DetailActivity extends AppCompatActivity {
                 this.fragment = new DetailFragment();
                 this.fragment.setArguments(bundle);
             }
-            try {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
+            this.beginFragmentTransaction();
+        }
+    }
 
-                final FadingScrimInsetsFrameLayout scrimInsetsLayout = findViewById(R.id.scrimInsetsLayout);
-                final View toolbarBackground = findViewById(R.id.toolbarBackground);
-                this.fragment.setScrollListener(new DetailPageScrollListener() {
+    private void beginFragmentTransaction() {
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frameLayout, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
 
-                    public void onScrollProgress(float percentage) {
-                        int alpha = (int) Math.min(255.0f, percentage * 2.55f);
-                        scrimInsetsLayout.redrawWithAlpha(alpha);
-                        toolbarBackground.setAlpha(percentage / 100);
-                    }
+            final FadingScrimInsetsFrameLayout scrimInsetsLayout = findViewById(R.id.scrimInsetsLayout);
+            final View toolbarBackground = findViewById(R.id.toolbarBackground);
+            this.fragment.setScrollListener(new DetailPageScrollListener() {
 
-                    public void onSetTitle(String title) {
-                        toolbar.setTitle(title);
-                    }
+                @Override
+                public void onScrollProgress(float percentage) {
+                    int alpha = (int) Math.min(255.0f, percentage * 2.55f);
+                    scrimInsetsLayout.redrawWithAlpha(alpha);
+                    toolbarBackground.setAlpha(percentage / 100);
+                }
 
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                @Override
+                public void onSetTitle(String title) {
+                    toolbar.setTitle(title);
+                }
+
+            });
+            this.fragment.setOnDisplayEntryListener(new DetailPageEntryListener() {
+
+                @Override
+                public void onDisplayEntry(int id) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(KeyWords.ID, id);
+                    fragment = new DetailFragment();
+                    fragment.setArguments(bundle);
+                    beginFragmentTransaction();
+                }
+
+            });
+            toolbar.setTitle("");
+            scrimInsetsLayout.redrawWithAlpha(0);
+            toolbarBackground.setAlpha(0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

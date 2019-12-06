@@ -20,15 +20,12 @@ import ru.urfu.museum.classes.MocksProvider;
 public class DetailGalleryAdapter extends RecyclerView.Adapter<DetailGalleryAdapter.ViewHolder> {
 
     private Activity context;
-    private int[] images;
-    private int entryId;
+    private Entry entry;
     private LayoutInflater inflater;
 
     public DetailGalleryAdapter(Activity context, int entryId) {
-        Entry entry = MocksProvider.getEntry(context, entryId);
         this.context = context;
-        this.images = entry != null && entry.gallery != null ? entry.gallery : new int[0];
-        this.entryId = entryId;
+        this.entry = MocksProvider.getEntry(context, entryId);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -45,7 +42,7 @@ public class DetailGalleryAdapter extends RecyclerView.Adapter<DetailGalleryAdap
 
     @Override
     public int getItemCount() {
-        return (images == null) ? 0 : images.length;
+        return (entry != null && entry.gallery == null) ? 0 : entry.gallery.length;
     }
 
     @Override
@@ -61,15 +58,15 @@ public class DetailGalleryAdapter extends RecyclerView.Adapter<DetailGalleryAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        viewHolder.image.setImageResource(this.images[position]);
+        viewHolder.image.setImageResource(this.entry.gallery[position]);
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (context != null) {
                     Intent intent = new Intent(context, GalleryActivity.class);
-                    intent.putExtra(KeyWords.ID, Integer.toString(entryId));
                     intent.putExtra(KeyWords.POSITION, Integer.toString(position));
+                    intent.putIntegerArrayListExtra(KeyWords.IMAGES, MocksProvider.getEntryImages(context, entry.id));
                     context.startActivity(intent);
                 }
             }

@@ -20,7 +20,6 @@ import ru.urfu.museum.R;
 import ru.urfu.museum.activity.DetailActivity;
 import ru.urfu.museum.classes.Entry;
 import ru.urfu.museum.classes.KeyWords;
-import ru.urfu.museum.utils.TypefaceManager;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
@@ -49,8 +48,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             author = holderView.findViewById(R.id.entryCardAuthor);
             text = holderView.findViewById(R.id.entryCardText);
             button = holderView.findViewById(R.id.entryCardReadMore);
-
-            title.setTypeface(TypefaceManager.getTypeface(context, TypefaceManager.MEDIUM));
         }
 
     }

@@ -12,8 +12,11 @@
     <string name="drawer_close">drawer_close</string>
     <string name="read_more">Read more</string>
     <string name="gallery">Gallery</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 
     <!-- NavDrawer items -->
+
     <string name="museum">Museum</string>
     <string name="working_time">Working time</string>
     <string name="my_favorites">My favorites</string>
@@ -22,4 +25,14 @@
     <string name="contact_us">Contact us</string>
     <string name="about_app">About app</string>
     <string name="title_activity_detail">DetailActivity</string>
+
+    <!-- Main Activity Toolbar Spinner Items -->
+
+    <string-array name="toolbar_spinner_items">
+        <item>First floor</item>
+        <item>Second floor</item>
+    </string-array>
+
+    <!-- String resources -->
+    <string name="timeout_fastest">150</string>
 </resources>

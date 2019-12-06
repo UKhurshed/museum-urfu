@@ -1,5 +1,6 @@
 package ru.urfu.museum.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import ru.urfu.museum.classes.DimensionsUtil;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.classes.MocksProvider;
 import ru.urfu.museum.classes.SpacingItemDecoration;
+import ru.urfu.museum.interfaces.ITitledFragment;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements ITitledFragment {
 
+    private int floor = -1;
     private View rootView;
     private MainAdapter adapter;
 
@@ -25,7 +28,7 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
         Bundle bundle = getArguments();
-        int floor = bundle != null ? bundle.getInt(KeyWords.FLOOR, 1) : 1;
+        this.floor = bundle != null ? bundle.getInt(KeyWords.FLOOR, 1) : 1;
         adapter = new MainAdapter(getActivity(), MocksProvider.getEntries(getActivity(), floor));
         adapter.setHasStableIds(true);
         super.onCreate(savedInstanceState);
@@ -49,5 +52,18 @@ public class MainFragment extends Fragment {
             listView.addItemDecoration(new SpacingItemDecoration(spanCount, spacings, true));
         }
         return rootView;
+    }
+
+    @Override
+    public String getTitle() {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return "";
+        }
+        String[] titles = activity.getResources().getStringArray(R.array.toolbar_spinner_items);
+        if (this.floor < 0 || this.floor >= titles.length) {
+            return "";
+        }
+        return titles[this.floor];
     }
 }

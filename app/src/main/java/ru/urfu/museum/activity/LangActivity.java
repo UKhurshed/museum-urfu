@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.utils.Preference;
-import ru.urfu.museum.utils.TypefaceManager;
 
 public class LangActivity extends AppCompatActivity {
 
@@ -19,14 +17,8 @@ public class LangActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lang);
-        TextView langChooseText = findViewById(R.id.langChooseText);
         Button langButtonEnglish = findViewById(R.id.langButtonEnglish);
         Button langButtonChinese = findViewById(R.id.langButtonChinese);
-
-        langChooseText.setTypeface(TypefaceManager.getTypeface(this, TypefaceManager.LIGHT));
-        langButtonEnglish.setTypeface(TypefaceManager.getTypeface(this, TypefaceManager.MEDIUM));
-        langButtonChinese.setTypeface(TypefaceManager.getTypeface(this, TypefaceManager.MEDIUM));
-
 
         langButtonEnglish.setOnClickListener(new View.OnClickListener() {
             @Override

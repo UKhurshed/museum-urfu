@@ -13,22 +13,26 @@ import com.stfalcon.imageviewer.StfalconImageViewer;
 import com.stfalcon.imageviewer.listeners.OnDismissListener;
 import com.stfalcon.imageviewer.loader.ImageLoader;
 
+import java.util.ArrayList;
+
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
-import ru.urfu.museum.classes.MocksProvider;
 
 public class GalleryFragment extends Fragment {
 
     private View rootView;
-    private int entryId = -1;
+    private ArrayList<Integer> images = new ArrayList<>();
     private int position = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
         Bundle bundle = getArguments();
-        this.entryId = bundle != null ? bundle.getInt(KeyWords.ID, -1) : -1;
-        this.position = bundle != null ? bundle.getInt(KeyWords.POSITION, 0) : 0;
+        if (bundle != null) {
+            this.images = bundle.getIntegerArrayList(KeyWords.IMAGES);
+            this.images = this.images == null ? new ArrayList<Integer>() : this.images;
+            this.position = bundle.getInt(KeyWords.POSITION, 0);
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -37,10 +41,10 @@ public class GalleryFragment extends Fragment {
         if (rootView == null && getActivity() != null) {
             rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
             final Activity activity = getActivity();
-            new StfalconImageViewer.Builder<>(activity, MocksProvider.getEntryImages(activity, this.entryId), new ImageLoader<Integer>() {
+            new StfalconImageViewer.Builder<>(activity, this.images, new ImageLoader<Integer>() {
 
-                public void loadImage(ImageView imageView, Integer imageUrl) {
-                    imageView.setImageResource(imageUrl);
+                public void loadImage(ImageView imageView, Integer imageResource) {
+                    imageView.setImageResource(imageResource);
                 }
 
             })

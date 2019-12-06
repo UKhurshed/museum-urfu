@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -24,7 +23,6 @@ import ru.urfu.museum.activity.MainActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.utils.DelayedTask;
 import ru.urfu.museum.utils.Preference;
-import ru.urfu.museum.utils.TypefaceManager;
 
 public class SplashFragment extends Fragment {
     private View rootView;
@@ -47,8 +45,6 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_splash, container, false);
-            TextView splashText = rootView.findViewById(R.id.splashText);
-            splashText.setTypeface(TypefaceManager.getTypeface(getActivity(), TypefaceManager.LIGHT));
         }
         return rootView;
     }

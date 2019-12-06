@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.GalleryFragment;
@@ -24,11 +26,11 @@ public class GalleryActivity extends AppCompatActivity {
         if (getIntent() != null) {
             if (this.fragment == null) {
                 Intent intent = getIntent();
-                String id = intent.getStringExtra(KeyWords.ID);
                 String position = intent.getStringExtra(KeyWords.POSITION);
+                ArrayList<Integer> list = intent.getIntegerArrayListExtra(KeyWords.IMAGES);
                 Bundle bundle = new Bundle();
-                bundle.putInt(KeyWords.ID, id == null ? -1 : Integer.parseInt(id));
-                bundle.putInt(KeyWords.POSITION, position == null ? -1 : Integer.parseInt(position));
+                bundle.putInt(KeyWords.POSITION, position == null ? 0 : Integer.parseInt(position));
+                bundle.putIntegerArrayList(KeyWords.IMAGES, list);
                 this.fragment = new GalleryFragment();
                 this.fragment.setArguments(bundle);
             }
