@@ -3,7 +3,7 @@
     <dimen name="layoutPadding">16dp</dimen>
     <dimen name="langButtonSize">98dp</dimen>
     <dimen name="langButtonMargin">16dp</dimen>
-    <dimen name="mainFragmentItemsSpacing">4dp</dimen>
+    <dimen name="mainFragmentItemsSpacing">6dp</dimen>
     <dimen name="detailGallerySpacing">8dp</dimen>
     <dimen name="toolbarTextSize">20sp</dimen>
 

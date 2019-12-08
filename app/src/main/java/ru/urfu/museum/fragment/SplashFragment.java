@@ -1,6 +1,7 @@
 package ru.urfu.museum.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ public class SplashFragment extends Fragment {
     private DelayedTask delayedAskPermissions;
     private boolean ASKED_PERMISSIONS_ON_INIT = false;
     private boolean REQUEST_PERMISSIONS_AGAIN = false;
+    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,11 @@ public class SplashFragment extends Fragment {
     }
 
     private boolean isPermissionsGranted() {
-        return isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean granted = true;
+        for (String permission : this.permissions) {
+            granted = granted && isPermissionGranted(permission);
+        }
+        return granted;
     }
 
     private boolean isPermissionGranted(String permissionName) {
@@ -65,16 +71,20 @@ public class SplashFragment extends Fragment {
             return;
         }
         REQUEST_PERMISSIONS_AGAIN = false;
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, KeyWords.PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(getActivity(), this.permissions, KeyWords.PERMISSION_REQUEST_CODE);
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
         if (requestCode == KeyWords.PERMISSION_REQUEST_CODE && grantResults.length >= 2) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 startNextActivity();
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage(getStringFromRes(R.string.no_permissions));
                 builder.setTitle(getStringFromRes(R.string.warning));
                 builder.setPositiveButton(getStringFromRes(R.string.settings), new DialogInterface.OnClickListener() {
@@ -87,9 +97,7 @@ public class SplashFragment extends Fragment {
                 builder.setNegativeButton(getStringFromRes(R.string.exit), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
+                        activity.finish();
                     }
 
                 });
@@ -97,41 +105,41 @@ public class SplashFragment extends Fragment {
 
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
+                        activity.finish();
                     }
 
                 });
                 builder.show();
             }
-        } else if (getActivity() != null) {
-            getActivity().finish();
+        } else {
+            activity.finish();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void openApplicationSettings() {
-        if (getActivity() == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
         REQUEST_PERMISSIONS_AGAIN = true;
-        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getActivity().getPackageName()));
-        getActivity().startActivityForResult(appSettingsIntent, KeyWords.PERMISSION_REQUEST_CODE);
+        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + activity.getPackageName()));
+        activity.startActivityForResult(appSettingsIntent, KeyWords.PERMISSION_REQUEST_CODE);
     }
 
     private void startNextActivity() {
-        if (getActivity() == null) {
+        Activity activity = getActivity();
+        if (activity == null) {
             return;
         }
         Intent intent;
-        if (Preference.getValue(getActivity(), Preference.LANG, null) == null) {
-            intent = new Intent(getActivity(), LangActivity.class);
+        if (Preference.getValue(activity, Preference.LANG, null) == null) {
+            intent = new Intent(activity, LangActivity.class);
         } else {
-            intent = new Intent(getActivity(), MainActivity.class);
+            intent = new Intent(activity, MainActivity.class);
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getActivity().startActivity(intent);
+        activity.startActivity(intent);
     }
 
     private String getStringFromRes(int resId) {

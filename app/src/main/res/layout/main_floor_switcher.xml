@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainFloorSwitcher"
+    style="@style/FloorSwitcher">
+
+    <TextView
+        android:id="@+id/mainFloorSwitcherName"
+        style="@style/FloorSwitcherName" />
+
+    <ImageView
+        style="@style/FloorSwitcherIcon"
+        android:contentDescription="@string/image_description" />
+</LinearLayout>

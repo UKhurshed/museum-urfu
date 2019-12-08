@@ -28,6 +28,7 @@ import ru.urfu.museum.fragment.AboutMuseumFragment;
 import ru.urfu.museum.fragment.FavoritesFragment;
 import ru.urfu.museum.fragment.MainFragment;
 import ru.urfu.museum.fragment.WorkingTimeFragment;
+import ru.urfu.museum.interfaces.SwitchFloorListener;
 import ru.urfu.museum.utils.Preference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -154,12 +155,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragment.setArguments(bundle);
+        this.setupFragmentListeners();
         try {
             fragmentTransaction.replace(R.id.frameLayout, fragment);
             fragmentTransaction.commitAllowingStateLoss();
             this.syncToolbarTitleView();
         } catch (IllegalStateException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setupFragmentListeners() {
+        if (fragment instanceof MainFragment) {
+            MainFragment mainFragment = (MainFragment) fragment;
+            mainFragment.setOnSwitchFloorListener(new SwitchFloorListener() {
+
+                @Override
+                public void onDisplayFloor(int floor) {
+                    Bundle differentBundle = new Bundle();
+                    differentBundle.putInt(KeyWords.FLOOR, floor);
+                    (new AsyncDisplayFragment(MainFragment.class, differentBundle)).execute();
+                    toolbarSpinner.setSelection(floor - 1);
+                }
+
+            });
         }
     }
 
@@ -181,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Void result) {
             try {
-                fragment = (Fragment) fragmentClass.getConstructor().newInstance();
+                fragment = (Fragment) fragmentClass.newInstance();
                 displayFragment(fragment, this.bundle);
                 super.onPostExecute(result);
             } catch (Exception e) {

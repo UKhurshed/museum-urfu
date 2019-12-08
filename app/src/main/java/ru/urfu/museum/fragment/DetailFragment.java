@@ -204,28 +204,33 @@ public class DetailFragment extends Fragment {
         final Entry nextEntry = MocksProvider.getNextEntry(getActivity(), this.entry.id);
         if (prevEntry == null && nextEntry == null) {
             this.pagination.setVisibility(View.GONE);
-        } else if (prevEntry == null) {
-            this.prev.setVisibility(View.GONE);
-            this.next.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    onDisplayEntryListener.onDisplayEntry(nextEntry.id);
-                }
-
-            });
-            this.nextSubtitle.setText(nextEntry.title);
         } else {
-            this.next.setVisibility(View.GONE);
-            this.prev.setOnClickListener(new View.OnClickListener() {
+            if (prevEntry != null) {
+                this.prev.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    onDisplayEntryListener.onDisplayEntry(prevEntry.id);
-                }
+                    @Override
+                    public void onClick(View v) {
+                        onDisplayEntryListener.onDisplayEntry(prevEntry.id);
+                    }
 
-            });
-            this.prevSubtitle.setText(prevEntry.title);
+                });
+                this.prevSubtitle.setText(prevEntry.title);
+            } else {
+                this.prev.setVisibility(View.GONE);
+            }
+            if (nextEntry != null) {
+                this.next.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        onDisplayEntryListener.onDisplayEntry(nextEntry.id);
+                    }
+
+                });
+                this.nextSubtitle.setText(nextEntry.title);
+            } else {
+                this.next.setVisibility(View.GONE);
+            }
         }
     }
 

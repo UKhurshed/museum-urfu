@@ -106,7 +106,7 @@
         <item name="android:layout_height">@dimen/langButtonSize</item>
         <item name="android:layout_marginRight">@dimen/langButtonMargin</item>
         <item name="android:layout_marginBottom">@dimen/langButtonMargin</item>
-        <item name="android:background">@drawable/button_lang</item>
+        <item name="android:background">@drawable/button_lang_background_ripple</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
@@ -234,6 +234,31 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="FloorSwitcher">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:background">@drawable/button_floor_background_ripple</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="FloorSwitcherName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="FloorSwitcherIcon">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:contentDescription">@string/image_description</item>
+        <item name="android:src">@drawable/ic_stair</item>
+        <item name="android:tint">@color/black</item>
     </style>
 
 </resources>

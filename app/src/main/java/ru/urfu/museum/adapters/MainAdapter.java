@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.santalu.aspectratioimageview.AspectRatioImageView;
@@ -20,28 +22,34 @@ import ru.urfu.museum.R;
 import ru.urfu.museum.activity.DetailActivity;
 import ru.urfu.museum.classes.Entry;
 import ru.urfu.museum.classes.KeyWords;
+import ru.urfu.museum.interfaces.SwitchFloorListener;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity context;
     private List<Entry> entries;
+    private int floor;
     private LayoutInflater inflater;
+    private final int TYPE_ENTRY = 0x0;
+    private final int TYPE_PAGE_PREV = 0x1;
+    private final int TYPE_PAGE_NEXT = 0x2;
+    private SwitchFloorListener listener = null;
 
-    public MainAdapter(Activity context, List<Entry> entries) {
+    public MainAdapter(Activity context, List<Entry> entries, int floor) {
         this.context = context;
         this.entries = entries;
+        this.floor = floor;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class EntryViewHolder extends RecyclerView.ViewHolder {
+        AspectRatioImageView image;
+        TextView title;
+        TextView author;
+        TextView text;
+        Button button;
 
-        private AspectRatioImageView image;
-        private TextView title;
-        private TextView author;
-        private TextView text;
-        private Button button;
-
-        ViewHolder(View holderView) {
+        EntryViewHolder(View holderView) {
             super(holderView);
             image = holderView.findViewById(R.id.entryCardImage);
             title = holderView.findViewById(R.id.entryCardTitle);
@@ -49,45 +57,125 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             text = holderView.findViewById(R.id.entryCardText);
             button = holderView.findViewById(R.id.entryCardReadMore);
         }
+    }
 
+    class FloorViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout parent;
+
+        FloorViewHolder(View holderView, String name) {
+            super(holderView);
+            parent = holderView.findViewById(R.id.mainFloorSwitcher);
+            TextView floorName = holderView.findViewById(R.id.mainFloorSwitcherName);
+            floorName.setText(name);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (floor == 1 && position == this.getItemCount() - 1) {
+            return this.TYPE_PAGE_NEXT;
+        }
+        if (floor == 2 && position == 0) {
+            return this.TYPE_PAGE_PREV;
+        }
+        return this.TYPE_ENTRY;
     }
 
     @Override
     public int getItemCount() {
-        return (entries == null) ? 0 : entries.size();
+        int count = 0;
+        if (this.entries != null) {
+            count += this.entries.size();
+        }
+        count++; // Next floor (on First floor), Prev floor (on Second floor)
+        return count;
     }
 
     @Override
     public long getItemId(int position) {
-        return entries.get(position).id;
+        return position;
     }
 
     @Override
-    public MainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.entry_card, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        final Entry entry = entries.get(position);
-        if (entry.image != -1) {
-            viewHolder.image.setImageResource(entry.image);
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case TYPE_PAGE_NEXT:
+            case TYPE_PAGE_PREV:
+                View floorView = inflater.inflate(R.layout.main_floor_switcher, parent, false);
+                String floorName = context.getResources().getString(
+                        viewType == TYPE_PAGE_NEXT ? R.string.second_floor : R.string.first_floor
+                );
+                return new FloorViewHolder(floorView, floorName);
+            case TYPE_ENTRY:
+            default:
+                View entryView = inflater.inflate(R.layout.entry_card, parent, false);
+                return new EntryViewHolder(entryView);
         }
-        viewHolder.title.setText(entry.title);
-        viewHolder.author.setText(entry.author);
-        viewHolder.text.setText(entry.text);
-        viewHolder.button.setOnClickListener(new OnClickListener() {
+    }
 
-            @Override
-            public void onClick(View v) {
-                if (context != null) {
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(KeyWords.ID, Integer.toString(entry.id));
-                    context.startActivity(intent);
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
+        switch (this.getItemViewType(position)) {
+            case TYPE_PAGE_PREV:
+                final FloorViewHolder prevViewHolder = (FloorViewHolder) viewHolder;
+                prevViewHolder.parent.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onDisplayFloor(floor - 1);
+                        }
+                    }
+
+                });
+                break;
+            case TYPE_PAGE_NEXT:
+                final FloorViewHolder nextViewHolder = (FloorViewHolder) viewHolder;
+                nextViewHolder.parent.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onDisplayFloor(floor + 1);
+                        }
+                    }
+
+                });
+                break;
+            case TYPE_ENTRY:
+            default:
+                final EntryViewHolder entryViewHolder = (EntryViewHolder) viewHolder;
+                final Entry entry = this.getEntryByPosition(position);
+                if (entry.image != -1) {
+                    entryViewHolder.image.setImageResource(entry.image);
                 }
-            }
+                entryViewHolder.title.setText(entry.title);
+                entryViewHolder.author.setText(entry.author);
+                entryViewHolder.text.setText(entry.text);
+                entryViewHolder.button.setOnClickListener(new OnClickListener() {
 
-        });
+                    @Override
+                    public void onClick(View v) {
+                        if (context != null) {
+                            Intent intent = new Intent(context, DetailActivity.class);
+                            intent.putExtra(KeyWords.ID, Integer.toString(entry.id));
+                            context.startActivity(intent);
+                        }
+                    }
+
+                });
+        }
+    }
+
+    public void setOnSwitchFloorListener(SwitchFloorListener listener) {
+        this.listener = listener;
+    }
+
+    private Entry getEntryByPosition(int position) {
+        if (floor == 2) {
+            position--;
+        }
+        return this.entries.get(position);
     }
 }
