@@ -30,7 +30,11 @@ public class SplashFragment extends Fragment {
     private DelayedTask delayedAskPermissions;
     private boolean ASKED_PERMISSIONS_ON_INIT = false;
     private boolean REQUEST_PERMISSIONS_AGAIN = false;
-    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String[] permissions = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

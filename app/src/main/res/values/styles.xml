@@ -164,6 +164,14 @@
         <item name="android:text">@string/read_more</item>
     </style>
 
+    <style name="MainQRCodeScanButton">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_gravity">end|bottom</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
     <style name="DetailText" parent="EntryCardText">
         <item name="android:maxLines">1000</item>
     </style>
@@ -230,8 +238,8 @@
     </style>
 
     <style name="DetailFavorite">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_marginRight">16dp</item>
     </style>

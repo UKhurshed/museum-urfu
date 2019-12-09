@@ -105,6 +105,10 @@ public class MocksProvider {
         return list;
     }
 
+    public static boolean containsEntry(Context context, int id) {
+        return MocksProvider.getEntry(context, id) != null;
+    }
+
     private static void init() {
         if (entries.keySet().size() == 0) {
             entries.put(KeyWords.LANG_EN, getEnglishEntries());

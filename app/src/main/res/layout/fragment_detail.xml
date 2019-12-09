@@ -18,7 +18,7 @@
                 android:id="@+id/detailImage"
                 style="@style/EntryCardImage"
                 android:contentDescription="@string/image_description"
-                app:ari_ratio="0.6" />
+                app:ari_ratio="0.7" />
 
             <TextView
                 android:id="@+id/detailTitle"

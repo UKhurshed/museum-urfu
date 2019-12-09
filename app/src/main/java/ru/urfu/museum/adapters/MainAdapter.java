@@ -33,6 +33,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int TYPE_ENTRY = 0x0;
     private final int TYPE_PAGE_PREV = 0x1;
     private final int TYPE_PAGE_NEXT = 0x2;
+    private final int TYPE_BOTTOM_SPACER = 0x3;
     private SwitchFloorListener listener = null;
 
     public MainAdapter(Activity context, List<Entry> entries, int floor) {
@@ -70,13 +71,22 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    class SpacerViewHolder extends RecyclerView.ViewHolder {
+        SpacerViewHolder(View holderView) {
+            super(holderView);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if (floor == 1 && position == this.getItemCount() - 1) {
+        if (floor == 1 && position == this.getItemCount() - 2) {
             return this.TYPE_PAGE_NEXT;
         }
         if (floor == 2 && position == 0) {
             return this.TYPE_PAGE_PREV;
+        }
+        if (position == this.getItemCount() - 1) {
+            return this.TYPE_BOTTOM_SPACER;
         }
         return this.TYPE_ENTRY;
     }
@@ -88,6 +98,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             count += this.entries.size();
         }
         count++; // Next floor (on First floor), Prev floor (on Second floor)
+        count++; // Bottom spacer view
         return count;
     }
 
@@ -108,9 +119,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 );
                 return new FloorViewHolder(floorView, floorName);
             case TYPE_ENTRY:
-            default:
                 View entryView = inflater.inflate(R.layout.entry_card, parent, false);
                 return new EntryViewHolder(entryView);
+            case TYPE_BOTTOM_SPACER:
+            default:
+                View spacerView = inflater.inflate(R.layout.main_spacer, parent, false);
+                return new SpacerViewHolder(spacerView);
         }
     }
 
@@ -144,7 +158,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 });
                 break;
             case TYPE_ENTRY:
-            default:
                 final EntryViewHolder entryViewHolder = (EntryViewHolder) viewHolder;
                 final Entry entry = this.getEntryByPosition(position);
                 if (entry.image != -1) {
@@ -165,6 +178,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
 
                 });
+            default:
+                break;
         }
     }
 

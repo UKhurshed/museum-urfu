@@ -16,6 +16,8 @@
     <string name="next">Next</string>
     <string name="first_floor">First floor</string>
     <string name="second_floor">Second floor</string>
+    <string name="qr_code_incompatible">Incompatible QR Code content</string>
+    <string name="entry_not_found_by_qr_code">Cannot find entry by scanned QR code</string>
 
     <!-- NavDrawer items -->
 

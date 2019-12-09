@@ -11,19 +11,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.KeyWords;
+import ru.urfu.museum.classes.MocksProvider;
 import ru.urfu.museum.fragment.AboutMuseumFragment;
 import ru.urfu.museum.fragment.FavoritesFragment;
 import ru.urfu.museum.fragment.MainFragment;
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private Spinner toolbarSpinner;
     private TextView toolbarTextView;
+    private CoordinatorLayout mainScanButtonParent;
     private Fragment fragment;
 
     @Override
@@ -49,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.drawer = findViewById(R.id.drawerLayout);
         this.toolbarSpinner = findViewById(R.id.toolbarTitleSpinner);
         this.toolbarTextView = findViewById(R.id.toolbarTitleTextView);
-        this.setupToolbarSpinner();
+        this.mainScanButtonParent = findViewById(R.id.mainScanButtonParent);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(drawerToggle);
@@ -61,6 +71,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             this.fragment = new MainFragment();
             displayFragment(this.fragment, null);
         }
+
+        FloatingActionButton mainScanButton = findViewById(R.id.mainScanButton);
+        mainScanButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                scanQRCode();
+            }
+
+        });
+
         this.setupToolbarSpinner();
         this.syncToolbarTitleView();
     }
@@ -229,5 +250,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.toolbarTextView.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private void scanQRCode() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("");
+        integrator.setBeepEnabled(false);
+        integrator.setDesiredBarcodeFormats(new ArrayList<String>() {{
+            add(IntentIntegrator.QR_CODE);
+        }});
+        integrator.initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result.getContents() != null) {
+            String qrCodeContent = result.getContents();
+            if (!qrCodeContent.matches("^\\d+$")) {
+                Snackbar.make(this.mainScanButtonParent, R.string.qr_code_incompatible, Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            int id = Integer.parseInt(result.getContents());
+            if (!MocksProvider.containsEntry(this, id)) {
+                Snackbar.make(this.mainScanButtonParent, R.string.entry_not_found_by_qr_code, Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(KeyWords.ID, Integer.toString(id));
+            startActivity(intent);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
