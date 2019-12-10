@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">URFU Museum</string>
+    <string name="image_description">image</string>
+    <string name="exit">Выход</string>
+    <string name="no_permissions">Не было получено одно или несколько обязательных разрешений. Вы можете выставить разрешения вручную в настройках.</string>
+    <string name="warning">Предупреждение</string>
+    <string name="settings">Настройки</string>
+    <string name="english">English</string>
+    <string name="chinese">中文</string>
+    <string name="choose_lang">Choose Your Display Language</string>
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_close</string>
+    <string name="read_more">Подробнее</string>
+    <string name="gallery">Галерея</string>
+    <string name="previous">Предыдущий</string>
+    <string name="next">Следующий</string>
+    <string name="first_floor">Первый этаж</string>
+    <string name="second_floor">Второй этаж</string>
+    <string name="qr_code_incompatible">Несовместимое содержимое QR кода</string>
+    <string name="entry_not_found_by_qr_code">Не удалось найти экспонат по сканированному QR коду</string>
+
+    <!-- NavDrawer items -->
+
+    <string name="museum">Музей</string>
+    <string name="working_time">Время работы</string>
+    <string name="my_favorites">Мои закладки</string>
+    <string name="about_museum">О музее</string>
+    <string name="change_language">Сменить язык</string>
+    <string name="contact_us">Контакты</string>
+    <string name="about_app">О приложении</string>
+
+    <!-- Main Activity Toolbar Spinner Items -->
+
+    <string-array name="toolbar_spinner_items">
+        <item>Первый этаж</item>
+        <item>Второй этаж</item>
+    </string-array>
+
+    <!-- String resources -->
+    <string name="timeout_fastest">150</string>
+</resources>

@@ -112,7 +112,7 @@ public class MocksProvider {
     private static void init() {
         if (entries.keySet().size() == 0) {
             entries.put(KeyWords.LANG_EN, getEnglishEntries());
-            entries.put(KeyWords.LANG_CH, getChineseEntries());
+            entries.put(KeyWords.LANG_ZH, getChineseEntries());
         }
     }
 

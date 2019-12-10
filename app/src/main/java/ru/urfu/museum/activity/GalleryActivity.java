@@ -3,7 +3,6 @@ package ru.urfu.museum.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,10 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.AppActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.GalleryFragment;
 
-public class GalleryActivity extends AppCompatActivity {
+public class GalleryActivity extends AppActivity {
 
     private Fragment fragment;
 

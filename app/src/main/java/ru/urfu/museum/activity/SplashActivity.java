@@ -3,16 +3,16 @@ package ru.urfu.museum.activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.AppActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.SplashFragment;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppActivity {
 
     private Fragment fragment;
 

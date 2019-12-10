@@ -1,7 +1,6 @@
 package ru.urfu.museum.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
@@ -31,6 +29,7 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.AppActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.classes.MocksProvider;
 import ru.urfu.museum.fragment.AboutMuseumFragment;
@@ -40,7 +39,7 @@ import ru.urfu.museum.fragment.WorkingTimeFragment;
 import ru.urfu.museum.interfaces.SwitchFloorListener;
 import ru.urfu.museum.utils.Preference;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private Spinner toolbarSpinner;
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         if (this.shouldSwitchFragment(id)) {
-            (new AsyncDisplayFragment(fragmentClass, bundle)).execute();
+            this.displayFragment(fragmentClass, bundle);
             this.drawer.closeDrawer(GravityCompat.START);
         }
         return true;
@@ -186,6 +185,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void displayFragment(Class fragmentClass, Bundle bundle) {
+        try {
+            this.fragment = (Fragment) fragmentClass.newInstance();
+            this.displayFragment(this.fragment, bundle);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setupFragmentListeners() {
         if (fragment instanceof MainFragment) {
             MainFragment mainFragment = (MainFragment) fragment;
@@ -195,40 +203,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onDisplayFloor(int floor) {
                     Bundle differentBundle = new Bundle();
                     differentBundle.putInt(KeyWords.FLOOR, floor);
-                    (new AsyncDisplayFragment(MainFragment.class, differentBundle)).execute();
+                    displayFragment(MainFragment.class, differentBundle);
                     toolbarSpinner.setSelection(floor - 1);
                 }
 
             });
         }
-    }
-
-    private class AsyncDisplayFragment extends AsyncTask<Void, Void, Void> {
-
-        private Class fragmentClass;
-        private Bundle bundle;
-
-        AsyncDisplayFragment(Class fragmentClass, Bundle bundle) {
-            this.fragmentClass = fragmentClass;
-            this.bundle = bundle;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-                displayFragment(fragment, this.bundle);
-                super.onPostExecute(result);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
     private void syncToolbarTitleView() {

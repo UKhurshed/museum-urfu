@@ -18,6 +18,6 @@ public class KeyWords {
     public static final String IMAGES = "IMAGES";
     public static final String POSITION = "POSITION";
     public static final String FLOOR = "FLOOR";
-    public static final String LANG_EN = "EN";
-    public static final String LANG_CH = "CH";
+    public static final String LANG_EN = "en";
+    public static final String LANG_ZH = "zh";
 }

@@ -4,19 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.AppActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.fragment.DetailFragment;
 import ru.urfu.museum.interfaces.DetailPageEntryListener;
 import ru.urfu.museum.interfaces.DetailPageScrollListener;
 import ru.urfu.museum.view.FadingScrimInsetsFrameLayout;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppActivity {
 
     private Toolbar toolbar;
     private DetailFragment fragment;

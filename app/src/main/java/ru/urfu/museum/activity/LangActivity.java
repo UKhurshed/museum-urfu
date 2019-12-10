@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import ru.urfu.museum.R;
+import ru.urfu.museum.classes.AppActivity;
 import ru.urfu.museum.classes.KeyWords;
 import ru.urfu.museum.utils.Preference;
 
-public class LangActivity extends AppCompatActivity {
+public class LangActivity extends AppActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class LangActivity extends AppCompatActivity {
         langButtonChinese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startNextActivity(KeyWords.LANG_CH);
+                startNextActivity(KeyWords.LANG_ZH);
             }
         });
     }
