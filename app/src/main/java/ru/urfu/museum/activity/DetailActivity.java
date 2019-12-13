@@ -10,7 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import ru.urfu.museum.R;
 import ru.urfu.museum.classes.AppActivity;
+import ru.urfu.museum.classes.Entry;
 import ru.urfu.museum.classes.KeyWords;
+import ru.urfu.museum.classes.MocksProvider;
 import ru.urfu.museum.fragment.DetailFragment;
 import ru.urfu.museum.interfaces.DetailPageEntryListener;
 import ru.urfu.museum.interfaces.DetailPageScrollListener;
@@ -20,23 +22,30 @@ public class DetailActivity extends AppActivity {
 
     private Toolbar toolbar;
     private DetailFragment fragment;
+    private boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.isTablet = getResources().getBoolean(R.bool.isTablet);
         setContentView(R.layout.activity_detail);
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         if (getIntent() != null) {
+            Intent intent = getIntent();
+            String id = intent.getStringExtra(KeyWords.ID);
+            if (id == null) {
+                throw new NullPointerException(this.getClass().getName() + ": Missing required parameter 'id'");
+            }
+            Entry entry = MocksProvider.getEntry(this, Integer.parseInt(id));
+            if (entry != null) {
+                toolbar.setTitle(entry.title);
+            }
             if (this.fragment == null) {
-                Intent intent = getIntent();
-                String id = intent.getStringExtra(KeyWords.ID);
-                if (id == null) {
-                    throw new NullPointerException(this.getClass().getName() + ": Missing required parameter 'id'");
-                }
                 Bundle bundle = new Bundle();
                 bundle.putInt(KeyWords.ID, Integer.parseInt(id));
                 this.fragment = new DetailFragment();
@@ -53,23 +62,27 @@ public class DetailActivity extends AppActivity {
             fragmentTransaction.replace(R.id.frameLayout, fragment);
             fragmentTransaction.commitAllowingStateLoss();
 
-            final FadingScrimInsetsFrameLayout scrimInsetsLayout = findViewById(R.id.scrimInsetsLayout);
-            final View toolbarBackground = findViewById(R.id.toolbarBackground);
-            this.fragment.setScrollListener(new DetailPageScrollListener() {
+            if (!this.isTablet) {
+                final FadingScrimInsetsFrameLayout scrimInsetsLayout = findViewById(R.id.scrimInsetsLayout);
+                final View toolbarBackground = findViewById(R.id.toolbarBackground);
+                this.fragment.setScrollListener(new DetailPageScrollListener() {
 
-                @Override
-                public void onScrollProgress(float percentage) {
-                    int alpha = (int) Math.min(255.0f, percentage * 2.55f);
-                    scrimInsetsLayout.redrawWithAlpha(alpha);
-                    toolbarBackground.setAlpha(percentage / 100);
-                }
+                    @Override
+                    public void onScrollProgress(float percentage) {
+                        int alpha = (int) Math.min(255.0f, percentage * 2.55f);
+                        scrimInsetsLayout.redrawWithAlpha(alpha);
+                        toolbarBackground.setAlpha(percentage / 100);
+                    }
 
-                @Override
-                public void onSetTitle(String title) {
-                    toolbar.setTitle(title);
-                }
+                    @Override
+                    public void onSetTitle(String title) {
+                        toolbar.setTitle(title);
+                    }
 
-            });
+                });
+                scrimInsetsLayout.redrawWithAlpha(0);
+                toolbarBackground.setAlpha(0);
+            }
             this.fragment.setOnDisplayEntryListener(new DetailPageEntryListener() {
 
                 @Override
@@ -82,9 +95,6 @@ public class DetailActivity extends AppActivity {
                 }
 
             });
-            toolbar.setTitle("");
-            scrimInsetsLayout.redrawWithAlpha(0);
-            toolbarBackground.setAlpha(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,5 +105,4 @@ public class DetailActivity extends AppActivity {
         onBackPressed();
         return true;
     }
-
 }

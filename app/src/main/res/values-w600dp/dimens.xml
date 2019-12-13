@@ -1,0 +1,12 @@
+<resources>
+
+    <dimen name="mainFragmentItemsSpacing">12dp</dimen>
+    <dimen name="side_default_spacings">24dp</dimen>
+    <dimen name="detail_layout_width">420dp</dimen>
+    <dimen name="detail_toolbar_bg_height">192dp</dimen>
+    <dimen name="detail_favorite_top_margin">164dp</dimen>
+    <dimen name="detail_favorite_left_margin">16dp</dimen>
+    <dimen name="detail_favorite_right_margin">0dp</dimen>
+    <dimen name="detail_title_top_margin">20dp</dimen>
+
+</resources>

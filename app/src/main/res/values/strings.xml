@@ -37,5 +37,6 @@
     </string-array>
 
     <!-- String resources -->
+    <string name="entries_cols">1</string>
     <string name="timeout_fastest">150</string>
 </resources>

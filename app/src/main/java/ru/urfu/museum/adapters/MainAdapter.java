@@ -30,10 +30,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Entry> entries;
     private int floor;
     private LayoutInflater inflater;
-    private final int TYPE_ENTRY = 0x0;
-    private final int TYPE_PAGE_PREV = 0x1;
-    private final int TYPE_PAGE_NEXT = 0x2;
-    private final int TYPE_BOTTOM_SPACER = 0x3;
+    public static final int TYPE_ENTRY = 0x0;
+    public static final int TYPE_PAGE_PREV = 0x1;
+    public static final int TYPE_PAGE_NEXT = 0x2;
+    public static final int TYPE_BOTTOM_SPACER = 0x3;
     private SwitchFloorListener listener = null;
 
     public MainAdapter(Activity context, List<Entry> entries, int floor) {

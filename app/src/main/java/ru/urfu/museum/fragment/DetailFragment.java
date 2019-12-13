@@ -54,10 +54,12 @@ public class DetailFragment extends Fragment {
     private DetailPageEntryListener onDisplayEntryListener;
     private DelayedTask hideFavoriteTask;
     private DelayedTask showFavoriteTask;
+    private boolean isTablet = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
+        this.isTablet = getResources().getBoolean(R.bool.isTablet);
         Bundle bundle = getArguments();
         int id = bundle != null ? bundle.getInt(KeyWords.ID, -1) : -1;
         this.entry = MocksProvider.getEntry(getActivity(), id);
@@ -236,14 +238,16 @@ public class DetailFragment extends Fragment {
 
     private void bindFavorite() {
         final Activity activity = getActivity();
-        this.favorite.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        if (!this.isTablet) {
+            this.favorite.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-            @Override
-            public void onGlobalLayout() {
-                setFavoriteTopMargin();
-            }
+                @Override
+                public void onGlobalLayout() {
+                    setFavoriteTopMargin();
+                }
 
-        });
+            });
+        }
         this.hideFavoriteTask = new DelayedTask(activity, R.string.timeout_fastest) {
 
             @Override

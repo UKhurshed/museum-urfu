@@ -5,7 +5,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"
-        android:background="#dfdfdf"
+        android:background="@color/lightBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

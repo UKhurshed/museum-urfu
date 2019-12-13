@@ -7,7 +7,6 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
         <item name="buttonStyle">@style/buttonWidgetStyle</item>
     </style>
@@ -45,8 +44,8 @@
     <style name="GroupTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">@dimen/side_default_spacings</item>
+        <item name="android:paddingRight">@dimen/side_default_spacings</item>
         <item name="android:background">@drawable/horizontal_rule</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/gray</item>
@@ -168,12 +167,27 @@
         <item name="android:layout_width">56dp</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:layout_gravity">end|bottom</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
+        <item name="android:layout_marginBottom">@dimen/side_default_spacings</item>
+    </style>
+
+    <style name="DetailCard" parent="Theme.AppCompat.Light" />
+
+    <style name="DetailTitle" parent="EntryCardTitle">
+        <item name="android:layout_marginTop">@dimen/detail_title_top_margin</item>
+        <item name="android:layout_marginLeft">@dimen/side_default_spacings</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
+    </style>
+
+    <style name="DetailAuthor" parent="EntryCardAuthor">
+        <item name="android:layout_marginLeft">@dimen/side_default_spacings</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
     </style>
 
     <style name="DetailText" parent="EntryCardText">
         <item name="android:maxLines">1000</item>
+        <item name="android:layout_marginLeft">@dimen/side_default_spacings</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
     </style>
 
     <style name="DetailGalleryTitle" parent="GroupTitle">
@@ -184,21 +198,21 @@
     <style name="DetailGallery">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginLeft">@dimen/side_default_spacings</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
     </style>
 
     <style name="DetailPrev">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginLeft">@dimen/side_default_spacings</item>
         <item name="android:layout_marginBottom">24dp</item>
     </style>
 
     <style name="DetailNext" parent="DetailPrev">
         <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginRight">@dimen/side_default_spacings</item>
     </style>
 
     <style name="DetailPrevTitle">
@@ -240,14 +254,16 @@
     <style name="DetailFavorite">
         <item name="android:layout_width">56dp</item>
         <item name="android:layout_height">56dp</item>
-        <item name="android:layout_alignParentEnd">true</item>
-        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">@dimen/detail_favorite_top_margin</item>
+        <item name="android:layout_marginLeft">@dimen/detail_favorite_left_margin</item>
+        <item name="android:layout_marginRight">@dimen/detail_favorite_right_margin</item>
     </style>
 
     <style name="FloorSwitcher">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_marginLeft">@dimen/mainFragmentItemsSpacing</item>
+        <item name="android:layout_marginRight">@dimen/mainFragmentItemsSpacing</item>
         <item name="android:background">@drawable/button_floor_background_ripple</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">horizontal</item>

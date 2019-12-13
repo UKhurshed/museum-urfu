@@ -22,11 +22,11 @@
 
             <TextView
                 android:id="@+id/detailTitle"
-                style="@style/EntryCardTitle" />
+                style="@style/DetailTitle" />
 
             <TextView
                 android:id="@+id/detailAuthor"
-                style="@style/EntryCardAuthor" />
+                style="@style/DetailAuthor" />
 
             <TextView
                 android:id="@+id/detailText"
@@ -86,8 +86,8 @@
 
                     <ImageView
                         style="@style/DetailNextIcon"
-                        android:contentDescription="@string/image_description"
                         android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/image_description"
                         app:srcCompat="@drawable/ic_arrow_right" />
                 </RelativeLayout>
             </LinearLayout>
@@ -96,6 +96,7 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/detailFavorite"
             style="@style/DetailFavorite"
+            android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_heart_outline" />
     </RelativeLayout>
 </ScrollView>

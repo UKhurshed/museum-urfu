@@ -6,5 +6,12 @@
     <dimen name="mainFragmentItemsSpacing">6dp</dimen>
     <dimen name="detailGallerySpacing">8dp</dimen>
     <dimen name="toolbarTextSize">20sp</dimen>
+    <dimen name="side_default_spacings">16dp</dimen>
+    <dimen name="detail_layout_width">0dp</dimen>
+    <dimen name="detail_toolbar_bg_height">0dp</dimen>
+    <dimen name="detail_favorite_top_margin">0dp</dimen>
+    <dimen name="detail_favorite_left_margin">0dp</dimen>
+    <dimen name="detail_favorite_right_margin">16dp</dimen>
+    <dimen name="detail_title_top_margin">12dp</dimen>
 
 </resources>
