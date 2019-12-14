@@ -44,29 +44,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null && getActivity() != null) {
             rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            final int spanCount = Integer.parseInt(getActivity().getResources().getString(R.string.entries_cols));
-            float spacings = DimensionsUtil.pxFromDpResource(getActivity(), R.dimen.mainFragmentItemsSpacing);
             RecyclerView listView = rootView.findViewById(R.id.listView);
-            GridLayoutManager manager = new GridLayoutManager(getActivity(), spanCount);
-            manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-
-                @Override
-                public int getSpanSize(int position) {
-                    switch (adapter.getItemViewType(position)) {
-                        case MainAdapter.TYPE_BOTTOM_SPACER:
-                        case MainAdapter.TYPE_PAGE_PREV:
-                        case MainAdapter.TYPE_PAGE_NEXT:
-                            return spanCount;
-                        default:
-                            return 1;
-                    }
-                }
-
-            });
             listView.setAdapter(adapter);
-            listView.setLayoutManager(manager);
-            listView.addItemDecoration(new SpacingItemDecoration(spanCount, spacings, true));
         }
+        this.setupLayoutManager();
         return rootView;
     }
 
@@ -84,6 +65,33 @@ public class MainFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setupLayoutManager() {
+        final int spanCount = Integer.parseInt(getActivity().getResources().getString(R.string.entries_cols));
+        float spacings = DimensionsUtil.pxFromDpResource(getActivity(), R.dimen.mainFragmentItemsSpacing);
+        RecyclerView listView = rootView.findViewById(R.id.listView);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), spanCount);
+        GridLayoutManager.SpanSizeLookup spanLookup = new GridLayoutManager.SpanSizeLookup() {
+
+            @Override
+            public int getSpanSize(int position) {
+                switch (adapter.getItemViewType(position)) {
+                    case MainAdapter.TYPE_PAGE_PREV:
+                    case MainAdapter.TYPE_PAGE_NEXT:
+                    case MainAdapter.TYPE_BOTTOM_SPACER:
+                        return spanCount;
+                    default:
+                        return 1;
+                }
+            }
+
+        };
+        manager.setSpanSizeLookup(spanLookup);
+        SpacingItemDecoration itemDecoration = new SpacingItemDecoration(spanCount, spacings, true);
+        itemDecoration.setSpanSizeLookup(spanLookup);
+        listView.setLayoutManager(manager);
+        listView.addItemDecoration(itemDecoration);
     }
 
     public void setOnSwitchFloorListener(SwitchFloorListener listener) {

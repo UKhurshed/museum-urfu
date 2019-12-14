@@ -80,15 +80,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (floor == 1 && position == this.getItemCount() - 2) {
-            return this.TYPE_PAGE_NEXT;
+            return MainAdapter.TYPE_PAGE_NEXT;
         }
         if (floor == 2 && position == 0) {
-            return this.TYPE_PAGE_PREV;
+            return MainAdapter.TYPE_PAGE_PREV;
         }
         if (position == this.getItemCount() - 1) {
-            return this.TYPE_BOTTOM_SPACER;
+            return MainAdapter.TYPE_BOTTOM_SPACER;
         }
-        return this.TYPE_ENTRY;
+        return MainAdapter.TYPE_ENTRY;
     }
 
     @Override
