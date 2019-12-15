@@ -3,7 +3,7 @@
     <string name="image_description">image</string>
     <string name="exit">Выход</string>
     <string name="no_permissions">Не было получено одно или несколько обязательных разрешений. Вы можете выставить разрешения вручную в настройках.</string>
-    <string name="warning">Предупреждение</string>
+    <string name="attention">Предупреждение</string>
     <string name="settings">Настройки</string>
     <string name="english">English</string>
     <string name="chinese">中文</string>

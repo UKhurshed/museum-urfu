@@ -2,7 +2,6 @@ package ru.urfu.museum.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -79,46 +79,43 @@ public class SplashFragment extends Fragment {
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         final Activity activity = getActivity();
         if (activity == null) {
             return;
         }
-        if (requestCode == KeyWords.PERMISSION_REQUEST_CODE && grantResults.length >= 2) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                startNextActivity();
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage(getStringFromRes(R.string.no_permissions));
-                builder.setTitle(getStringFromRes(R.string.warning));
-                builder.setPositiveButton(getStringFromRes(R.string.settings), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int id) {
-                        openApplicationSettings();
-                    }
-
-                });
-                builder.setNegativeButton(getStringFromRes(R.string.exit), new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int id) {
-                        activity.finish();
-                    }
-
-                });
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        activity.finish();
-                    }
-
-                });
-                builder.show();
+        if (requestCode == KeyWords.PERMISSION_REQUEST_CODE) {
+            if (this.isPermissionsGranted()) {
+                this.startNextActivity();
+                return;
             }
-        } else {
-            activity.finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle(getStringFromRes(R.string.attention));
+            builder.setMessage(getStringFromRes(R.string.no_permissions));
+            builder.setPositiveButton(getStringFromRes(R.string.settings), new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int id) {
+                    openApplicationSettings();
+                }
+
+            });
+            builder.setNegativeButton(getStringFromRes(R.string.exit), new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int id) {
+                    activity.finish();
+                }
+
+            });
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    activity.finish();
+                }
+
+            });
+            builder.show();
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void openApplicationSettings() {
