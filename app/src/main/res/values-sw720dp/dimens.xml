@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="detail_layout_width">520dp</dimen>
+
+</resources>

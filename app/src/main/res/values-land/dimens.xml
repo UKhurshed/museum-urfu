@@ -1,0 +1,11 @@
+<resources>
+
+    <dimen name="toolbarTextSize">16sp</dimen>
+    <dimen name="detail_layout_width">480dp</dimen>
+    <dimen name="detail_toolbar_bg_height">144dp</dimen>
+    <dimen name="detail_favorite_top_margin">116dp</dimen>
+    <dimen name="detail_favorite_left_margin">16dp</dimen>
+    <dimen name="detail_favorite_right_margin">0dp</dimen>
+    <dimen name="detail_title_top_margin">16dp</dimen>
+
+</resources>

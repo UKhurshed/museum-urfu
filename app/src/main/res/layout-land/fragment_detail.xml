@@ -48,53 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="24dp" />
 
-                <LinearLayout
-                    android:id="@+id/detailPagination"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:id="@+id/detailPrev"
-                        style="@style/DetailPrev">
-
-                        <TextView
-                            android:id="@+id/detailPrevTitle"
-                            style="@style/DetailPrevTitle"
-                            android:text="@string/previous" />
-
-                        <TextView
-                            android:id="@+id/detailPrevSubtitle"
-                            style="@style/DetailPrevSubtitle"
-                            android:layout_below="@id/detailPrevTitle" />
-
-                        <ImageView
-                            style="@style/DetailNextIcon"
-                            android:contentDescription="@string/image_description"
-                            app:srcCompat="@drawable/ic_arrow_left" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/detailNext"
-                        style="@style/DetailNext">
-
-                        <TextView
-                            android:id="@+id/detailNextTitle"
-                            style="@style/DetailNextTitle"
-                            android:text="@string/next" />
-
-                        <TextView
-                            android:id="@+id/detailNextSubtitle"
-                            style="@style/DetailNextSubtitle"
-                            android:layout_below="@id/detailNextTitle" />
-
-                        <ImageView
-                            style="@style/DetailNextIcon"
-                            android:layout_alignParentEnd="true"
-                            android:contentDescription="@string/image_description"
-                            app:srcCompat="@drawable/ic_arrow_right" />
-                    </RelativeLayout>
-                </LinearLayout>
+                <include layout="@layout/prev_next_buttons" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

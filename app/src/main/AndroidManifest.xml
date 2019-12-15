@@ -35,7 +35,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.DetailActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/DetailTheme" />
         <activity
             android:name=".activity.GalleryActivity"
             android:theme="@style/GalleryTheme" />

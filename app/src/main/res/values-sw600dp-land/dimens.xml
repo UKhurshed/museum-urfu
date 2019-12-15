@@ -1,5 +1,6 @@
 <resources>
 
+    <dimen name="toolbarTextSize">20sp</dimen>
     <dimen name="detail_layout_width">600dp</dimen>
     <dimen name="detail_favorite_left_margin">32dp</dimen>
 

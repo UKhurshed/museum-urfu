@@ -17,8 +17,12 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="DetailTheme" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="GalleryTheme" parent="AppTheme">
@@ -56,8 +60,8 @@
 
     <style name="AlertDialogButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="backgroundTint">@android:color/transparent</item>
-        <item name="rippleColor">@color/primary</item>
-        <item name="android:textColor">@color/primary</item>
+        <item name="rippleColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -70,6 +74,15 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="ToolbarStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleText</item>
     </style>
 
     <style name="ToolbarTitleSpinnerStyle">
@@ -87,6 +100,10 @@
         <item name="android:singleLine">true</item>
         <item name="android:textAlignment">inherit</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/toolbarTextSize</item>
+    </style>
+
+    <style name="ToolbarTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/toolbarTextSize</item>
     </style>
 
@@ -135,7 +152,7 @@
     <style name="EntryCard" parent="Theme.AppCompat.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="cardCornerRadius">4dp</item>
+        <item name="cardCornerRadius">6dp</item>
         <item name="cardElevation">2dp</item>
         <item name="cardBackgroundColor">@android:color/white</item>
         <item name="cardUseCompatPadding">true</item>
